@@ -27,6 +27,7 @@ ASByteArray::ASByteArray(UINT32* ptr)
 {
 	m_addr = (UINT32*)((UINT32)ptr & 0xfffffff8);
 	m_config = FlashPlayerConfigBuilder::instance().getConfig();
+	m_buffer = (UINT32*)m_addr[(m_config->byteArrayOffsetInByteArrayObject + m_config->bufferOffsetInByteArray)/sizeof(UINT32)];
 }
 
 
@@ -63,16 +64,8 @@ bool ASByteArray::isByteArray(UINT32* ptr)
 
 UINT8* ASByteArray::getData()
 {
-	UINT32* buffer= NULL;
-	if(m_config->m_flash_version == VER_15){
-		UINT32 *ba = (UINT32*)((UINT32)m_addr + m_config->byteArrayOffsetInByteArrayObject);
-		buffer = (UINT32*)ba[m_config->bufferOffsetInByteArray/sizeof(UINT32)];
-	} else {
-		buffer = (UINT32*)m_addr[m_config->bufferOffsetInByteArray/sizeof(UINT32)];
-	}
-	UINT8* data = (UINT8*)buffer[m_config->dataOffsetInByteArrayBuffer/sizeof(UINT32)];
-	UINT32 count = buffer[m_config->countOffsetInByteArrayBuffer/sizeof(UINT32)];
-
+	UINT8* data = (UINT8*)m_buffer[m_config->dataOffsetInByteArrayBuffer/sizeof(UINT32)];
+	UINT32 count = m_buffer[m_config->countOffsetInByteArrayBuffer/sizeof(UINT32)];
 	UINT8* copyOfData = (UINT8*)malloc(count);
 	if (copyOfData == NULL)
 	{
@@ -86,15 +79,6 @@ UINT8* ASByteArray::getData()
 
 UINT32 ASByteArray::getDataLength()
 {
-	UINT32* buffer= NULL;
-
-	if(m_config->m_flash_version == VER_15){
-		UINT32 *ba = (UINT32*)((UINT32)m_addr + m_config->byteArrayOffsetInByteArrayObject);
-		buffer = (UINT32*)ba[m_config->bufferOffsetInByteArray/sizeof(UINT32)];
-	} else {
-		buffer = (UINT32*)m_addr[m_config->bufferOffsetInByteArray/sizeof(UINT32)];
-	}
-
-	UINT32 count = buffer[m_config->countOffsetInByteArrayBuffer/sizeof(UINT32)];
+	UINT32 count = m_buffer[m_config->countOffsetInByteArrayBuffer/sizeof(UINT32)];
 	return count;
 }

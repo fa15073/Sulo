@@ -37,5 +37,6 @@ private:
 
 	Config* m_config;
 	UINT32* m_addr;
+	UINT32* m_buffer;
 };
 
