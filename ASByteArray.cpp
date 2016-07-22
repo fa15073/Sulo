@@ -65,7 +65,7 @@ UINT8* ASByteArray::getData()
 {
 	UINT32* buffer= NULL;
 	if(m_config->m_flash_version == VER_15){
-		UINT32 *ba= (UINT32*)m_addr[m_config->byteArrayOffsetInByteArrayObject/sizeof(UINT32)];
+		UINT32 *ba = (UINT32*)((UINT32)m_addr + m_config->byteArrayOffsetInByteArrayObject);
 		buffer = (UINT32*)ba[m_config->bufferOffsetInByteArray/sizeof(UINT32)];
 	} else {
 		buffer = (UINT32*)m_addr[m_config->bufferOffsetInByteArray/sizeof(UINT32)];
@@ -89,7 +89,7 @@ UINT32 ASByteArray::getDataLength()
 	UINT32* buffer= NULL;
 
 	if(m_config->m_flash_version == VER_15){
-		UINT32 *ba= (UINT32*)m_addr[m_config->byteArrayOffsetInByteArrayObject/sizeof(UINT32)];
+		UINT32 *ba = (UINT32*)((UINT32)m_addr + m_config->byteArrayOffsetInByteArrayObject);
 		buffer = (UINT32*)ba[m_config->bufferOffsetInByteArray/sizeof(UINT32)];
 	} else {
 		buffer = (UINT32*)m_addr[m_config->bufferOffsetInByteArray/sizeof(UINT32)];
