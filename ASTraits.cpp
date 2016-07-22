@@ -86,6 +86,12 @@ string ASTraits::getName()
 		return m_name;
 	}
 
+	if (getPosType() == TRAITSTYPE_ACTIVATION && !m_config->debugBuild)
+	{
+		m_name = "activation traits";
+		return m_name;
+	}
+
 	UINT32* p_ns = (UINT32*)m_traits[m_config->namespaceOffsetInTraits/4];
 	UINT32* p_name = (UINT32*)m_traits[m_config->nameOffsetInTraits/4];
 

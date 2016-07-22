@@ -140,7 +140,7 @@ FlashPlayerConfigBuilder::FlashPlayerConfigBuilder(void)
 	m_supportedConfigs["11.1.102.62_win_sa"].poolOffsetInMethodInfo = 0x18;
 	m_supportedConfigs["11.1.102.62_win_sa"].abcInfoPosOffsetInMethodInfo = 0x1c;
 	m_supportedConfigs["11.1.102.62_win_sa"].methodIdOffsetInMethodInfo = 0x20;
-	m_supportedConfigs["11.1.102.62_win_sa"].traitsOffsetInScope      = 0x8;
+	m_supportedConfigs["11.1.102.62_win_sa"].traitsOffsetInScope      = 0xc;
 	m_supportedConfigs["11.1.102.62_win_sa"].flagsOffsetInMethodInfo = 0x34;
 	m_supportedConfigs["11.1.102.62_win_sa"].initOffsetInTraits = 0x4c;
 	m_supportedConfigs["11.1.102.62_win_sa"].traitsPosOffsetOffsetInTraits = 0x54;
@@ -172,7 +172,7 @@ FlashPlayerConfigBuilder::FlashPlayerConfigBuilder(void)
 	m_supportedConfigs["11.1.102.62_winax"].methodInfoOffsetInMethodEnv = 0x8;
 	m_supportedConfigs["11.1.102.62_winax"].invokerOffsetInMethodInfo = 0x8;
 	m_supportedConfigs["11.1.102.62_winax"].traitsOffsetInMethodInfo = 0x10;
-	m_supportedConfigs["11.1.102.62_winax"].traitsOffsetInScope      = 0x8;
+	m_supportedConfigs["11.1.102.62_winax"].traitsOffsetInScope      = 0xc;
 	m_supportedConfigs["11.1.102.62_winax"].poolOffsetInMethodInfo = 0x18;
 	m_supportedConfigs["11.1.102.62_winax"].abcInfoPosOffsetInMethodInfo = 0x1c;
 	m_supportedConfigs["11.1.102.62_winax"].methodIdOffsetInMethodInfo = 0x20;

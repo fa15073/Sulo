@@ -98,6 +98,13 @@ void ASMethodInfo::buildMethodSignature()
 	// Do some manual ABC parsing to find parameter and return value information
 	const char* pos = (char*)abc_info_pos;
 
+	if (pos == NULL)
+	{
+		// e.g. activation traits
+		m_returnValueType = "null";
+		return;
+	}
+
 	UINT32 param_count = readU30(pos);
 
 	UINT32 ret_type_name_index = readU30(pos);
@@ -223,11 +230,20 @@ UINT32* ASMethodInfo::getTraitsPtr()
 
 	UINT32* declaringScopeOrTraits = (UINT32*)m_methodInfo[m_config->traitsOffsetInMethodInfo/4];
 
-	if ((UINT32)declaringScopeOrTraits & 1){
+	UINT32 lowBits = (UINT32)declaringScopeOrTraits & 7;
+	if (lowBits != 0)
+	{
+		// traits are always 8 bytes aligned, low 3 bits are reused, restore the
+		// pointer first
+		declaringScopeOrTraits = (UINT32*)((UINT32)declaringScopeOrTraits & ~7);
+	}
+
+	if (lowBits & 1){
 		declaringScopeOrTraits = (UINT32*)((UINT32)declaringScopeOrTraits & ~1);
-		return (UINT32*)declaringScopeOrTraits[m_config->traitsOffsetInScope/4];//[2];
+		return (UINT32*)declaringScopeOrTraits[m_config->traitsOffsetInScope/4];
 	}
 	else{
+		// this is a scope
 		return declaringScopeOrTraits;
 	}
 }
