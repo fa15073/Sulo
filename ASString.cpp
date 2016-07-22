@@ -68,7 +68,7 @@ UINT8* ASString::getPtrToBuf()
 
 string ASString::getString(bool verbose)
 {
-	if (!WINDOWS::IsBadReadPtr((const void*)((ADDRINT)m_addr + m_config->stringLengthOffset), 16) && !WINDOWS::IsBadReadPtr((const void*)((ADDRINT)m_addr + m_config->stringBufferOffset), 16))
+	if (!WINDOWS::IsBadReadPtr((const void*)((ADDRINT)m_addr + m_config->stringLengthOffset), 8) && !WINDOWS::IsBadReadPtr((const void*)((ADDRINT)m_addr + m_config->stringBufferOffset), 4))
 	{
 		UINT32 flags = m_addr[0x14>>2];
 		UINT8* buffer = NULL;

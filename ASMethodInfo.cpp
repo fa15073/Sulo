@@ -227,7 +227,6 @@ UINT32 ASMethodInfo::getFlags()
 
 UINT32* ASMethodInfo::getTraitsPtr()
 {
-
 	UINT32* declaringScopeOrTraits = (UINT32*)m_methodInfo[m_config->traitsOffsetInMethodInfo/4];
 
 	UINT32 lowBits = (UINT32)declaringScopeOrTraits & 7;
@@ -239,11 +238,10 @@ UINT32* ASMethodInfo::getTraitsPtr()
 	}
 
 	if (lowBits & 1){
-		declaringScopeOrTraits = (UINT32*)((UINT32)declaringScopeOrTraits & ~1);
+		// this is scope
 		return (UINT32*)declaringScopeOrTraits[m_config->traitsOffsetInScope/4];
 	}
 	else{
-		// this is a scope
 		return declaringScopeOrTraits;
 	}
 }
