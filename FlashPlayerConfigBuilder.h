@@ -32,6 +32,7 @@ typedef enum _FLASH_VERSION
 	VER_15= 15,
 	VER_16= 16,
 	VER_17= 17,
+	VER_22= 22,
 }FLASH_VERSION;
 
 typedef struct Config {
