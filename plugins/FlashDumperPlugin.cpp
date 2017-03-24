@@ -65,6 +65,14 @@ bool FlashDumperPlugin::beforeMethodCall(ASMethodInfo* mi, string methodName, UI
 
 	LOGF("Dumped flash to %s\n", filename);
 
+	if (data != NULL)
+	{
+		free(data);
+		data = NULL;
+	}
+	delete ba;
+	ba = NULL;
+
 	return false;
 }
 

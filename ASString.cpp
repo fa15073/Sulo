@@ -47,7 +47,7 @@ bool ASString::isString(UINT32* addr)
 	addr = (UINT32*)((UINT32)addr & 0xfffffff8);
 	Config* config = FlashPlayerConfigBuilder::instance().getConfig();
 
-	if (!WINDOWS::IsBadReadPtr((const void*)addr, 16))
+	if (!Logger::IsBadReadPtr((const void*)addr, 16))
 	{
 		UINT32* obj = (UINT32*)addr;
 		ADDRINT vtableAddr = (UINT32)obj[0];
@@ -68,7 +68,7 @@ UINT8* ASString::getPtrToBuf()
 
 string ASString::getString(bool verbose)
 {
-	if (!WINDOWS::IsBadReadPtr((const void*)((ADDRINT)m_addr + m_config->stringLengthOffset), 8) && !WINDOWS::IsBadReadPtr((const void*)((ADDRINT)m_addr + m_config->stringBufferOffset), 4))
+	if (!Logger::IsBadReadPtr((const void*)((ADDRINT)m_addr + m_config->stringLengthOffset), 8) && !Logger::IsBadReadPtr((const void*)((ADDRINT)m_addr + m_config->stringBufferOffset), 4))
 	{
 		UINT32 flags = m_addr[0x14>>2];
 		UINT8* buffer = NULL;
@@ -88,12 +88,22 @@ string ASString::getString(bool verbose)
 		}
 
 		UINT32 length = m_addr[m_config->stringLengthOffset>>2];
-		
 
-		if (!WINDOWS::IsBadReadPtr((const void*)buffer, length))
+		if (!Logger::IsBadReadPtr((const void*)buffer, length))
 		{
-			string s = string((const char*)buffer, length);
-			return s;
+			if (flags & 1)
+			{
+				// wide char string, convert to utf8
+				string r = string((length << 1) + length + 1, '\x0');
+				int newsize = WINDOWS::WideCharToMultiByte(CP_UTF8, 0, (WINDOWS::LPCWSTR)buffer, length, (WINDOWS::LPSTR)r.c_str(), r.length(), NULL, NULL);
+				r.resize(newsize);
+				return r;
+			}
+			else
+			{
+				string s = string((const char*)buffer, length);
+				return s;
+			}
 		}
 	}
 

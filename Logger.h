@@ -41,5 +41,11 @@ public:
 		free(buf);
 		va_end(args);
 	} ;
+
+	static BOOL inline IsBadReadPtr(const void *lp, unsigned int ucb)
+	{
+		// add shortcut for obvious wrong pointers
+		return (unsigned int)lp < 655536 || WINDOWS::IsBadReadPtr(lp, ucb);
+	} ;
 };
 

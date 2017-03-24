@@ -413,7 +413,7 @@ bool FlashPlayerConfigBuilder::isSupportedFlashPlayer(IMG img)
 			continue;
 		}
 
-		if (!WINDOWS::IsBadReadPtr((const void*)(fc->versionStrRVA+loadOffset), fc->versionStr.length()+1))
+		if (!Logger::IsBadReadPtr((const void*)(fc->versionStrRVA+loadOffset), fc->versionStr.length()+1))
 		{
 			if (strcmp(fc->versionStr.c_str(), (const char*)(fc->versionStrRVA+loadOffset)) == 0)
 			{

@@ -48,7 +48,7 @@ bool ASByteArray::isByteArray(UINT32* ptr)
 	UINT32* addr = (UINT32*)((UINT32)ptr & 0xfffffff8);
 	Config* config = FlashPlayerConfigBuilder::instance().getConfig();
 
-	if (!WINDOWS::IsBadReadPtr((const void*)addr, 16))
+	if (!Logger::IsBadReadPtr((const void*)addr, 16))
 	{
 		UINT32* ba = (UINT32*)addr;
 		ADDRINT vtableAddr = (UINT32)ba[0];
